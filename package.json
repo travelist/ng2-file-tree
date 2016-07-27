@@ -11,10 +11,11 @@
     "angularjs"
   ],
   "scripts": {
-    "flow.install:typings": "./node_modules/.bin/typings install",
-    "flow.compile": "npm run flow.install:typings && npm run flow.compile:common",
-    "flow.compile:common": "./node_modules/.bin/tsc -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "npm run typings && npm run compile:common",
+    "compile:common": "./node_modules/.bin/tsc -p tsconfig.json",
+    "test": "npm run tslint",
+    "tslint": "tslint src/*.ts",
+    "typings": "./node_modules/.bin/typings install"
   },
   "repository": {
     "type": "git",
