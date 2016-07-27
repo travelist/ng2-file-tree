@@ -1,0 +1,31 @@
+<li>
+    <div> <!-- if this is directory -->
+        <a (click)="clickFolder(item)" class="animated fast fadeInDown">
+
+            <span class="point"> <!-- down button -->
+                <i class="fa fa-angle-right" *ngIf="isInThisPath(item.name)"></i>
+                <i class="fa fa-angle-down" *ngIf="!isInThisPath(item.name)"></i>
+            </span>
+
+            <i class="fa fa-folder-open" *ngIf="isInThisPath(item.name)"></i>
+            <i class="fa fa-folder-open-o" *ngIf="!isInThisPath(item.name)"></i>
+
+            {{ (item.name.split('/').pop() || '/') | strLimit : 30 }}
+        </a>
+
+        <ul *ngIf="folderOpened" class="nav nav-sidebar">
+            <node *ngFor="i in item.children" [item]="i"></node>
+        </ul>
+    </div>
+
+    <div> <!-- else if this is file -->
+        <a (click)="clickFile(item)"
+           class="animated fast fadeInDown">
+
+            <i class="fa fa-file-o"
+               *ngIf="!isInThisPath(item.name)"></i>
+
+            {{ (item.name.split('/').pop() || '/') | strLimit : 30 }}
+        </a>
+    </div>
+</li>

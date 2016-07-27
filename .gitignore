@@ -35,3 +35,17 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# type script artifacts
+/typings
+
+# WebStorm
+.idea
+
+# ng2-directory-tree
+/src/*.js
+/src/*.js.map
+/src/*.d.ts
+ng2-directory-tree.js
+ng2-directory-tree.d.ts
+ng2-directory-tree.js.map
