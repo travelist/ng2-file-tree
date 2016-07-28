@@ -10,28 +10,28 @@ import {Node} from './node'
 const NODE_COMPONENT_TEMPLATE = `
 <li class="all-item">
 
-    <div *ngIf="node.children && node.children.length > 0">
-        <a (click)="clickFolder(node)"
+    <div *ngIf="node.isFolder">
+        <a (click)="clickItem(node)"
            class="folder-item"
            [ngClass]="{focus: node._focus}">
 
-            <span class="point">
-                <i class="fa fa-fw fa-caret-right" *ngIf="!(folderOpened)"></i>
-                <i class="fa fa-fw fa-caret-down" *ngIf="folderOpened"></i>
+            <span class="point" (click)="clickFolderExpand(node)">
+                <i class="fa fa-fw fa-caret-right" *ngIf="!(node.isExpanded)"></i>
+                <i class="fa fa-fw fa-caret-down" *ngIf="node.isExpanded"></i>
             </span>
 
-            <i class="fa fa-folder-o" *ngIf="!(folderOpened)"></i>
-            <i class="fa fa-folder-open-o" *ngIf="folderOpened"></i>
+            <i class="fa fa-folder-o" *ngIf="!(node.isExpanded)"></i>
+            <i class="fa fa-folder-open-o" *ngIf="node.isExpanded"></i>
             {{ node.name }}
         </a>
 
-        <ul *ngIf="folderOpened" class="children-items">
+        <ul *ngIf="node.isExpanded" class="children-items">
             <node *ngFor="let n of node.children" [node]="n" (clicked)="propagate($event)"></node>
         </ul>
     </div>
 
-    <div *ngIf="!node.children || !(node.children?.length > 0)">
-        <a (click)="clickFile(node)"
+    <div *ngIf="!node.isFolder">
+        <a (click)="clickItem(node)"
            class="file-item animated fast fadeInDown"
            [ngClass]="{focus: node._focus}">
             <i class="fa fa-file-o"></i>
@@ -61,24 +61,15 @@ const DIRECTORY_TREE_STYLE = `
 export class NodeComponent implements OnInit {
     @Input() node: Node
     @Input() index: number
-    @Output() clicked: EventEmitter
-    folderOpened: boolean
-    focused: boolean
+    @Output() clicked: EventEmitter<Node>
 
     constructor() { this.clicked = new EventEmitter() }
 
-    ngOnInit() {
-        this.node = new Node(this.node)
-        this.folderOpened = false
-        this.focused = false
-    }
+    ngOnInit() { }
 
-    clickFolder(node: Node) {
-        this.folderOpened = !this.folderOpened
-        this.clicked.emit(node)
-    }
+    clickFolderExpand(node: Node) { this.node.isExpanded = !this.node.isExpanded }
 
-    clickFile(node: Node) { this.clicked.emit(node) }
+    clickItem(node: Node) { this.clicked.emit(node) }
 
     propagate(node: Node) { this.clicked.emit(node) }
 }

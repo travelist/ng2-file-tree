@@ -11,7 +11,7 @@ import {NodeComponent} from './node.component'
 const DIRECTORY_TREE_TEMPLATE = `
 <div>
     <ul>
-        <node [node]="directory" (clicked)="nodeClicked($event)" [index]="0"></node>
+        <node [node]="directory" (clicked)="nodeClicked($event)"></node>
     </ul>
 </div>
 `
@@ -31,8 +31,8 @@ const DIRECTORY_TREE_STYLE = `
 export class DirectoryTreeComponent implements OnInit {
     @Input() directory: Node
     @Input() isActive: boolean
-    @Output() onChange: EventEmitter
-    @Output() clicked: EventEmitter
+    @Output() onChange: EventEmitter<Node>
+    @Output() clicked: EventEmitter<Node>
 
     currFocusNode: Node
 
@@ -42,6 +42,7 @@ export class DirectoryTreeComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.directory = new Node(this.directory)
         this.currFocusNode = null
         this.isActive = false
     }
@@ -61,12 +62,22 @@ export class DirectoryTreeComponent implements OnInit {
                 this.onChange.emit(this.currFocusNode)
                 break
             case 37: // left
+                console.log(this.currFocusNode)
+                console.log(this.currFocusNode.parent)
+                // if focus on folder and it is not folded:
+                //   fold folder
+                // else if parent is exist:
+                //   move to parent
                 break
             case 38: // Up
+                // Move to upper item
                 break
             case 39: // Right
+                // if focus on folder and it is folded:
+                //   expand folder
                 break
             case 40: // Down
+                // Move to following item
                 break
         }
     }
