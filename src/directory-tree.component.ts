@@ -54,30 +54,41 @@ export class DirectoryTreeComponent implements OnInit {
 
     keydownHandler(event: KeyboardEvent) {
         //if (!this.isActive) return
-
-        console.log(event.keyCode)
+        if (this.currFocusNode === null) return
 
         switch (event.keyCode) {
             case 13: // Enter
                 this.onChange.emit(this.currFocusNode)
                 break
             case 37: // left
-                console.log(this.currFocusNode)
-                console.log(this.currFocusNode.parent)
-                // if focus on folder and it is not folded:
-                //   fold folder
-                // else if parent is exist:
-                //   move to parent
+                if (this.currFocusNode.isFolder
+                    && this.currFocusNode.isExpanded) {
+                    this.currFocusNode.isExpanded = false
+                    return
+                }
+                if (!this.currFocusNode.hasParent()) return
+                this.updateFocusNode(this.currFocusNode.parent)
                 break
             case 38: // Up
                 // Move to upper item
                 break
             case 39: // Right
-                // if focus on folder and it is folded:
-                //   expand folder
+                if (!this.currFocusNode.isFolder) return
+                if (!this.currFocusNode.isExpanded) {
+                    this.currFocusNode.isExpanded = true
+                } else if (this.currFocusNode.children.length > 0) {
+                    this.updateFocusNode(this.currFocusNode.children[0])
+                }
                 break
             case 40: // Down
-                // Move to following item
+                if (this.currFocusNode.isFolder
+                    && this.currFocusNode.isExpanded
+                    && this.currFocusNode.children.length > 0) {
+                    // first child
+                    this.updateFocusNode(this.currFocusNode.children[0])
+                } else {
+                    // next sibling
+                }
                 break
         }
     }

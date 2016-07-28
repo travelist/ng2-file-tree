@@ -10,6 +10,7 @@ export class Node {
     _focus: boolean
     _is_folder: boolean
     _is_expanded: boolean
+    _params: Object
 
     constructor(opts:{
         name?: string,
@@ -32,12 +33,16 @@ export class Node {
         this.children.forEach((node) => _children.push(new Node(node, this)))
         this.children = _children
 
+        this._params = opts
         this._parent = parent
         this._focus = opts._focus || false
         // TODO need to consider the type variable
         this._is_folder = this.type == 'dir' || this.children.length > 0
         this._is_expanded = this.type == 'dir' || this.children.length > 0
     }
+
+    get params(): Object { return this.params }
+    set params(p: Object) { this.params = p }
 
     get parent(): Node { return this._parent }
     set parent(n: Node) { this._parent = n }
@@ -47,9 +52,10 @@ export class Node {
     get isExpanded(): boolean { return this._is_expanded }
     set isExpanded(t: boolean) { this._is_expanded = t }
 
+    public hasParent(): boolean { return this.parent !== null || typeof (this.parent) === 'undefined' }
+
     public focus() { this._focus = true }
 
     public blur() { this._focus = false }
-
 
 }
