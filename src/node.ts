@@ -37,8 +37,8 @@ export class Node {
         this._parent = parent
         this._focus = opts._focus || false
         // TODO need to consider the type variable
-        this._is_folder = this.type == 'dir' || this.children.length > 0
-        this._is_expanded = this.type == 'dir' || this.children.length > 0
+        this._is_folder = this.type === 'dir' || this.children.length > 0
+        this._is_expanded = this.type === 'dir' || this.children.length > 0
     }
 
     get params(): Object { return this.params }
