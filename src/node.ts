@@ -61,7 +61,7 @@ export class Node {
     public stringify() {
         return JSON.stringify(this, (key: string, value: any) => {
             if (key.includes('_')) return
-            else return value
+            return value
         })
     }
 }

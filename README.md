@@ -2,6 +2,8 @@
 
 Angular2 Component for rendering directory tree
 
+<img src="https://raw.githubusercontent.com/travelist/ng2-directory-tree/master/demo/demo.gif" height="240px">
+(Demo with mouse clicks and keyboard shortcuts)
 
 Please feel free to open issues for new features, requirements, and bug reports. Will deal with them accordingly.
 
