@@ -1,4 +1,4 @@
-# Ng2 Directory Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg)](https://circleci.com/gh/travelist/ng2-directory-tree)
+# Ng2 Directory Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg&circle-token=c554ebe845b53a2e0db4bc4961ca1747c25168ea)](https://circleci.com/gh/travelist/ng2-directory-tree)
 
 Angular2 Component for rendering directory tree
 
