@@ -1,10 +1,10 @@
 export class Node {
     name: string
-    path: string
-    mode: string
+    //path: string
+    //mode: string
     type: string
-    sha: string
-    size: number
+    //sha: string
+    //size: number
     children: Array<Node>
     _parent: Node
     _focus: boolean
@@ -22,12 +22,12 @@ export class Node {
         children?: Array<Node>,
         _focus?: boolean
     }, parent: Node = null) {
-        this.path = opts.path || ''
+        //this.path = opts.path || ''
         this.name = opts.name || opts.path
-        this.mode = opts.mode || ''
+        //this.mode = opts.mode || ''
         this.type = opts.type || ''
-        this.sha = opts.sha || ''
-        this.size = opts.size
+        //this.sha = opts.sha || ''
+        //this.size = opts.size
         this.children = opts.children || []
         var _children: Array<Node> = []
         this.children.forEach((node) => _children.push(new Node(node, this)))
@@ -58,4 +58,10 @@ export class Node {
 
     public blur() { this._focus = false }
 
+    public stringify() {
+        return JSON.stringify(this, (key: string, value: any) => {
+            if (key.includes('_')) return
+            else return value
+        })
+    }
 }

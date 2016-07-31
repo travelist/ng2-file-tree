@@ -1,4 +1,10 @@
-# ng2-directory-tree
+# Ng2 Directory Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg)](https://circleci.com/gh/travelist/ng2-directory-tree)
+
+Angular2 Component for rendering directory tree
+
+
+Please feel free to open issues for new features, requirements, and bug reports. Will deal with them accordingly.
+
 
 ### Usage
 
@@ -34,7 +40,10 @@ import { DirectoryTreeComponent } from 'ng2-directory-tree'
 
 @Component({
     selector: 'my-app',
-    template: `<directory-tree [directory]="dir"></directory-tree>`,
+    template: `<directory-tree [directory]="dir"
+                               (onChange)="logging($event)"
+                               [keyboardWatch]=true>
+               </directory-tree>`,
     directives: [DirectoryTreeComponent]
 })
 export class AppComponent {
@@ -48,13 +57,30 @@ export class AppComponent {
               "name": "june",
               "children": [
                 {
-                  "name": "windsurf.jpg",
+                  "name": "windsurf.jpg"
                 }]
             }
           ]
         }
       ]
     }
+
+    logging(node) {
+        console.log(node)
+    }
 }
 
 ```
+
+### Features
+
+- [ ] Handling keyboard event
+  - [x] Move by up-arrow, down-arrow
+  - [ ] Move by up-arrow, down-arrow
+- [ ] General icon support (now it's hard coded)
+- [ ] Change icons by file type (`.jpg`, `.js`, ...)
+- [ ] ....so forth
+
+### Contribution
+
+Any reporting issues, sending pull requests, or even pushing the star button are welcome and appreciated.

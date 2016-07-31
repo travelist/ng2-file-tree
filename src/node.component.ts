@@ -1,7 +1,6 @@
 import {Component} from '@angular/core'
 import {Input} from '@angular/core'
 import {Output} from '@angular/core'
-import {OnInit} from '@angular/core'
 import {EventEmitter} from '@angular/core'
 import {NgClass} from '@angular/common';
 
@@ -32,7 +31,7 @@ const NODE_COMPONENT_TEMPLATE = `
 
     <div *ngIf="!node.isFolder">
         <a (click)="clickItem(node)"
-           class="file-item animated fast fadeInDown"
+           class="file-item"
            [ngClass]="{focus: node._focus}">
             <i class="fa fa-file-o"></i>
             {{ node.name }}
@@ -44,10 +43,11 @@ const NODE_COMPONENT_TEMPLATE = `
 const DIRECTORY_TREE_STYLE = `
 .all-item { list-style-type: none }
 .folder-item { }
-.file-item { padding-left: 20px }
+.file-item { padding-left: 25px; }
 .children-items {
   padding-left: 25px;
   padding-top: 4px;
+  padding-bottom: 4px;
 }
 .focus { color: steelblue }
 `
@@ -58,14 +58,12 @@ const DIRECTORY_TREE_STYLE = `
     directives: [NodeComponent, NgClass],
     styles: [DIRECTORY_TREE_STYLE]
 })
-export class NodeComponent implements OnInit {
+export class NodeComponent {
     @Input() node: Node
     @Input() index: number
     @Output() clicked: EventEmitter<Node>
 
     constructor() { this.clicked = new EventEmitter() }
-
-    ngOnInit() { }
 
     clickFolderExpand(node: Node) { this.node.isExpanded = !this.node.isExpanded }
 

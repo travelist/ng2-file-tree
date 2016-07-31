@@ -11,7 +11,9 @@ import {NodeComponent} from './node.component'
 const DIRECTORY_TREE_TEMPLATE = `
 <div>
     <ul>
-        <node [node]="directory" (clicked)="nodeClicked($event)"></node>
+        <node [node]="directory"
+              (clicked)="nodeClicked($event)">
+        </node>
     </ul>
 </div>
 `
@@ -30,30 +32,29 @@ const DIRECTORY_TREE_STYLE = `
 })
 export class DirectoryTreeComponent implements OnInit {
     @Input() directory: Node
-    @Input() isActive: boolean
+    @Input() keyboardWatch: boolean
     @Output() onChange: EventEmitter<Node>
-    @Output() clicked: EventEmitter<Node>
 
     currFocusNode: Node
 
     constructor(private _eref: ElementRef) {
         this.onChange = new EventEmitter()
-        this.clicked = new EventEmitter()
+        this.keyboardWatch = false
     }
 
     ngOnInit() {
         this.directory = new Node(this.directory)
         this.currFocusNode = null
-        this.isActive = false
     }
 
     nodeClicked(nextNode: Node) {
         this.updateFocusNode(nextNode)
-        this.clicked.emit(nextNode)
+        console.log(nextNode)
+        this.onChange.emit(nextNode)
     }
 
     keydownHandler(event: KeyboardEvent) {
-        //if (!this.isActive) return
+        if (!this.keyboardWatch) return
         if (this.currFocusNode === null) return
 
         switch (event.keyCode) {
