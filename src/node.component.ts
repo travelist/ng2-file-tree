@@ -7,43 +7,46 @@ import {NgClass} from '@angular/common';
 import {Node} from './node'
 
 const NODE_COMPONENT_TEMPLATE = `
-<li class="all-item">
+<li *ngIf="node.is_dir" class="all-item">
+    <a (click)="clickItem(node)"
+       class="folder-item"
+       [ngClass]="{focus: node._focus}">
 
-    <div *ngIf="node.isFolder">
-        <a (click)="clickItem(node)"
-           class="folder-item"
-           [ngClass]="{focus: node._focus}">
-
+        <nobr>
             <span class="point" (click)="clickFolderExpand(node)">
                 <i class="fa fa-fw fa-caret-right" *ngIf="!(node.isExpanded)"></i>
                 <i class="fa fa-fw fa-caret-down" *ngIf="node.isExpanded"></i>
             </span>
 
+
             <i class="fa fa-folder-o" *ngIf="!(node.isExpanded)"></i>
             <i class="fa fa-folder-open-o" *ngIf="node.isExpanded"></i>
             {{ node.name }}
-        </a>
+        </nobr>
+    </a>
 
-        <ul *ngIf="node.isExpanded" class="children-items">
-            <node *ngFor="let n of node.children" [node]="n" (clicked)="propagate($event)"></node>
-        </ul>
-    </div>
-
-    <div *ngIf="!node.isFolder">
-        <a (click)="clickItem(node)"
-           class="file-item"
-           [ngClass]="{focus: node._focus}">
-            <i class="fa fa-file-o"></i>
-            {{ node.name }}
-        </a>
-    </div>
+    <ul *ngIf="node.isExpanded" class="children-items">
+        <node *ngFor="let n of node.children" [node]="n" (clicked)="propagate($event)"></node>
+    </ul>
+</li>
+<li *ngIf="!node.is_dir" class="all-item">
+    <a (click)="clickItem(node)"
+       class="file-item"
+       [ngClass]="{focus: node._focus}">
+       <nobr>
+           <i class="fa fa-file-o"></i> {{ node.name }}
+       </nobr>
+    </a>
 </li>
 `
 
 const DIRECTORY_TREE_STYLE = `
-.all-item { list-style-type: none }
+.all-item {
+  list-style-type: none;
+  display:inline;
+}
 .folder-item { }
-.file-item { padding-left: 25px; }
+.file-item { padding-left: 0px; }
 .children-items {
   padding-left: 25px;
   padding-top: 4px;

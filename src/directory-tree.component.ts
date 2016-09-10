@@ -10,7 +10,7 @@ import {NodeComponent} from './node.component'
 
 const DIRECTORY_TREE_TEMPLATE = `
 <div>
-    <ul>
+    <ul class="ul-directory-tree">
         <node [node]="directory"
               (clicked)="nodeClicked($event)">
         </node>
@@ -19,6 +19,7 @@ const DIRECTORY_TREE_TEMPLATE = `
 `
 
 const DIRECTORY_TREE_STYLE = `
+    .ul-directory-tree { padding: 0; }
 `
 
 @Component({
@@ -49,7 +50,6 @@ export class DirectoryTreeComponent implements OnInit {
 
     nodeClicked(nextNode: Node) {
         this.updateFocusNode(nextNode)
-        console.log(nextNode)
         this.onChange.emit(nextNode)
     }
 
@@ -95,9 +95,10 @@ export class DirectoryTreeComponent implements OnInit {
     }
 
     private updateFocusNode(next: Node) {
-        if (this.currFocusNode) this.currFocusNode.blur()
+        if (this.currFocusNode) {
+            this.currFocusNode._focus = false
+        }
         this.currFocusNode = next
-        this.currFocusNode.focus()
+        this.currFocusNode._focus = true
     }
-
 }

@@ -1,6 +1,6 @@
 {
   "name": "ng2-directory-tree",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Angular2 Directives for rendering Directory Tree",
   "main": "ng2-directory-tree.js",
   "typings": "ng2-directory-tree.d.ts",

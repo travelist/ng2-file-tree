@@ -21,7 +21,7 @@ export class Node {
         size?: number,
         children?: Array<Node>,
         _focus?: boolean
-    }, parent: Node = null) {
+    } = {}, parent: Node = null) {
         //this.path = opts.path || ''
         this.name = opts.name || opts.path
         //this.mode = opts.mode || ''

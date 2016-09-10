@@ -13,8 +13,6 @@ const TEMPLATE=`
 <div style="float: right; width: 50%">
     {{ data }}
 </div>
-
-
 `
 
 @Component({
@@ -27,6 +25,7 @@ export class AppComponent {
 
     dir = {
         "name": "photos",
+        "is_dir": true,
         "children": [
             {
                 "name": "summer",
@@ -43,7 +42,10 @@ export class AppComponent {
                     }
                 ]
             },
-            { "name": "global.jpg" },
+            {
+                "is_dir": false,
+                "name": "global.jpg"
+            },
         ]
     }
 
