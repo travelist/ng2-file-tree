@@ -1,12 +1,12 @@
-import {Component} from '@angular/core'
-import {EventEmitter} from '@angular/core'
-import {ElementRef} from '@angular/core'
-import {Input} from '@angular/core'
-import {Output} from '@angular/core'
-import {OnInit} from '@angular/core'
+import { Component } from '@angular/core'
+import { EventEmitter } from '@angular/core'
+import { ElementRef } from '@angular/core'
+import { Input } from '@angular/core'
+import { Output } from '@angular/core'
+import { OnInit } from '@angular/core'
 
-import {Node} from './node'
-import {NodeComponent} from './node.component'
+import { Node } from './node'
+import { NodeComponent } from './node.component'
 
 const DIRECTORY_TREE_TEMPLATE = `
 <div>
@@ -25,7 +25,6 @@ const DIRECTORY_TREE_STYLE = `
 @Component({
     selector: 'directory-tree',
     template: DIRECTORY_TREE_TEMPLATE,
-    directives: [NodeComponent],
     styles: [DIRECTORY_TREE_STYLE],
     host: {
         '(window:keydown)': 'keydownHandler($event)'

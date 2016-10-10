@@ -41,6 +41,10 @@ export class Node {
         this._is_expanded = this.type === 'dir' || this.children.length > 0
     }
 
+    public isDir(): boolean {
+        return this.type === 'dir' || this.children.length > 0
+    }
+
     get params(): Object { return this.params }
     set params(p: Object) { this.params = p }
 

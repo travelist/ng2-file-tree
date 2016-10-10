@@ -1,18 +1,16 @@
-import {Component} from '@angular/core'
-import {Input} from '@angular/core'
-import {Output} from '@angular/core'
-import {EventEmitter} from '@angular/core'
-import {NgClass} from '@angular/common';
+import { Component } from '@angular/core'
+import { Input } from '@angular/core'
+import { Output } from '@angular/core'
+import { EventEmitter } from '@angular/core'
 
-import {Node} from './node'
+import { Node } from './node'
 
 const NODE_COMPONENT_TEMPLATE = `
-<li *ngIf="node.is_dir" class="all-item">
+<li *ngIf="node.isDir()" class="all-item">
     <a (click)="clickItem(node)"
        class="folder-item"
        [ngClass]="{focus: node._focus}">
-
-        <nobr>
+        <div style="white-space: nowrap">
             <span class="point" (click)="clickFolderExpand(node)">
                 <i class="fa fa-fw fa-caret-right" *ngIf="!(node.isExpanded)"></i>
                 <i class="fa fa-fw fa-caret-down" *ngIf="node.isExpanded"></i>
@@ -22,20 +20,20 @@ const NODE_COMPONENT_TEMPLATE = `
             <i class="fa fa-folder-o" *ngIf="!(node.isExpanded)"></i>
             <i class="fa fa-folder-open-o" *ngIf="node.isExpanded"></i>
             {{ node.name }}
-        </nobr>
+        </div>
     </a>
 
     <ul *ngIf="node.isExpanded" class="children-items">
         <node *ngFor="let n of node.children" [node]="n" (clicked)="propagate($event)"></node>
     </ul>
 </li>
-<li *ngIf="!node.is_dir" class="all-item">
+<li *ngIf="!node.isDir()" class="all-item">
     <a (click)="clickItem(node)"
        class="file-item"
        [ngClass]="{focus: node._focus}">
-       <nobr>
-           <i class="fa fa-file-o"></i> {{ node.name }}
-       </nobr>
+       <div style="white-space: nowrap">
+           <i class="fa fa-file-o"></i> {{ node.name }} aaaas
+       </div>
     </a>
 </li>
 `
@@ -58,7 +56,6 @@ const DIRECTORY_TREE_STYLE = `
 @Component({
     selector: 'node',
     template: NODE_COMPONENT_TEMPLATE,
-    directives: [NodeComponent, NgClass],
     styles: [DIRECTORY_TREE_STYLE]
 })
 export class NodeComponent {

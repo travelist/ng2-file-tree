@@ -1,6 +1,6 @@
 {
   "name": "ng2-directory-tree",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Angular2 Directives for rendering Directory Tree",
   "main": "ng2-directory-tree.js",
   "typings": "ng2-directory-tree.d.ts",
@@ -13,6 +13,7 @@
   "scripts": {
     "compile": "npm run typings && npm run compile:common",
     "compile:common": "./node_modules/.bin/tsc -p tsconfig.json",
+    "watch": "./node_modules/.bin/tsc -p tsconfig.json -w",
     "test": "npm run tslint",
     "tslint": "tslint src/*.ts",
     "typings": "./node_modules/.bin/typings install"
@@ -28,15 +29,14 @@
   },
   "homepage": "https://github.com/travelist/ng2-directory-tree#readme",
   "dependencies": {
-    "@angular/common": "2.0.0-rc.3 || 2.0.0-rc.4 || 2.0.0-rc.5 || 2.0.0-rc.6 || 2.0.0-rc.7 || 2.0.0-rc.8 || 2.0.0-rc.9",
-    "@angular/core": "2.0.0-rc.3 || 2.0.0-rc.4 || 2.0.0-rc.5 || 2.0.0-rc.6 || 2.0.0-rc.7 || 2.0.0-rc.8 || 2.0.0-rc.9",
-    "rxjs": "*",
-
-    "font-awesome": "^4.6.0"
+    "@angular/common": "~2.0.1",
+    "@angular/core": "~2.0.1",
+    "rxjs": "5.0.0-beta.12",
+    "font-awesome": "*"
   },
   "devDependencies": {
-    "zone.js": "^0.6.6",
-    "typescript": "^1.8.10",
+    "zone.js": "^0.6.23",
+    "typescript": "^2.0.3",
     "tslint": "^3.13.0"
   }
 }
