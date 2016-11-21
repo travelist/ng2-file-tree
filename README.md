@@ -1,11 +1,11 @@
-# NG2 File Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg&circle-token=c554ebe845b53a2e0db4bc4961ca1747c25168ea)](https://circleci.com/gh/travelist/ng2-directory-tree)
+# Angular2 File Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-file-tree.svg?style=svg)](https://circleci.com/gh/travelist/ng2-file-tree)
 
 Angular2 Component for rendering directory tree
 
 <img src="https://raw.githubusercontent.com/travelist/ng2-directory-tree/master/demo/demo.gif" height="240px">
 (Demo with mouse clicks and keyboard shortcuts)
 
-Please feel free to open issues for new features, requirements, and bug reports. Will deal with them accordingly.
+Please feel free to open issues for new features, requirements, and bug reports. This repository is developing based on requests;)
 
 ## Installation
 
@@ -96,16 +96,30 @@ We can import this library using SystemJS (`systemjs.config.js`):
 ## Usage
 
 ```javascript
+// app/app.module.ts
+
+// (1/2)
+import { Ng2FileTreeModule } from 'ng2-file-tree/ng2-file-tree'
+
+@NgModule({
+  imports: [ BrowserModule, Ng2FileTreeModule ], // (2/2)
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+```
+
+
+
+```javascript
 import { Component } from '@angular/core';
-import { FileTreeComponent } from 'ng2-file-tree'
 
 @Component({
     selector: 'my-app',
     template: `<file-tree [tree]="fileTree"
                           (onChange)="logging($event)"
                           [keyboardWatch]=true>
-               </file-tree>`,
-    directives: [FileTreeComponent]
+               </file-tree>`
 })
 export class AppComponent {
     fileTree = {
@@ -130,7 +144,6 @@ export class AppComponent {
         console.log(node)
     }
 }
-
 ```
 
 ### Features

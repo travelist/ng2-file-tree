@@ -11,7 +11,7 @@ import { NodeComponent } from './node.component'
 const DIRECTORY_TREE_TEMPLATE = `
 <div>
     <ul class="ul-directory-tree">
-        <node [node]="directory"
+        <node [node]="tree"
               (clicked)="nodeClicked($event)">
         </node>
     </ul>
@@ -23,7 +23,7 @@ const DIRECTORY_TREE_STYLE = `
 `;
 
 @Component({
-    selector: 'directory-tree',
+    selector: 'file-tree',
     template: DIRECTORY_TREE_TEMPLATE,
     styles: [DIRECTORY_TREE_STYLE],
     host: {
@@ -31,7 +31,7 @@ const DIRECTORY_TREE_STYLE = `
     }
 })
 export class FileTreeComponent implements OnInit {
-    @Input() directory: Node;
+    @Input() tree: Node;
     @Input() keyboardWatch: boolean;
     @Output() onChange: EventEmitter<Node>;
 
@@ -43,7 +43,7 @@ export class FileTreeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.directory = new Node(this.directory);
+        this.tree = new Node(this.tree);
         this.currFocusNode = null
     }
 
