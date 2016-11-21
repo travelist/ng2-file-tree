@@ -1,4 +1,4 @@
-# Ng2 File Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg&circle-token=c554ebe845b53a2e0db4bc4961ca1747c25168ea)](https://circleci.com/gh/travelist/ng2-directory-tree)
+# NG2 File Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg&circle-token=c554ebe845b53a2e0db4bc4961ca1747c25168ea)](https://circleci.com/gh/travelist/ng2-directory-tree)
 
 Angular2 Component for rendering directory tree
 
@@ -7,49 +7,108 @@ Angular2 Component for rendering directory tree
 
 Please feel free to open issues for new features, requirements, and bug reports. Will deal with them accordingly.
 
+## Installation
 
-### Usage
+In `package.json`, add following lines in the `dependencies` block:
 
 ```
-"ng2-directory-tree": "*"
+"font-awesome": "~4.7.0"  # Use any versions
+"ng2-file-tree": "~0.4.0"
 ```
+
+### [Angular2 QuickStart](https://angular.io/docs/ts/latest/quickstart.html)
 
 ```html
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 ```
+
+We can import this library using SystemJS (`systemjs.config.js`):
 
 ```javascript
-// systemjs.config.js
+// This example is following to Angular2 Quick Start Documentation
 
-var map = {
-  ...
+(function (global) {
+  System.config({
+    paths: {
+      'npm:': 'node_modules/'
+    },
+    map: {
+      app: 'app',
 
-  'ng2-directory-tree': 'node_modules/ng2-directory-tree'
-};
+      '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
+      '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
+      '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
+      '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+      '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+      '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
+      '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
+      '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+      '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
 
-var packages = {
-  ...
+      'rxjs':                      'npm:rxjs',
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
 
-  'ng2-directory-tree': { main: 'ng2-directory-tree', defaultExtension: 'js' }
-};
+      // Add this line (1/2)
+      'ng2-file-tree': 'node_modules/ng2-file-tree',
+    },
+    packages: {
+      app: {
+        main: './main.js',
+        defaultExtension: 'js'
+      },
+      rxjs: {
+        defaultExtension: 'js'
+      },
+      'angular-in-memory-web-api': {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+
+      // Add this line (2/2)
+      'ng2-file-tree': { defaultExtension: 'js' }
+    }
+  });
+})(this);
 
 ```
 
+### [Angular CLI](https://github.com/angular/angular-cli)
+
+1. `../node_modules/font-awesome/css/font-awesome.css` to **style** block of *angular-cli.json*.
+2. `../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)` to **addons** block of *angular-cli.json*.
+
+```json
+/* angular-cli.json  */
+{
+  "apps": [
+    {
+      "styles": [
+        "../node_modules/font-awesome/css/font-awesome.css"
+      ]
+    }
+  ],
+  "addons": [
+    "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+  ]
+}
+```
+
+## Usage
 
 ```javascript
 import { Component } from '@angular/core';
-import { FileTreeComponent } from 'ng2-directory-tree'
+import { FileTreeComponent } from 'ng2-file-tree'
 
 @Component({
     selector: 'my-app',
-    template: `<directory-tree [directory]="dir"
-                               (onChange)="logging($event)"
-                               [keyboardWatch]=true>
-               </directory-tree>`,
+    template: `<file-tree [tree]="fileTree"
+                          (onChange)="logging($event)"
+                          [keyboardWatch]=true>
+               </file-tree>`,
     directives: [FileTreeComponent]
 })
 export class AppComponent {
-    dir = {
+    fileTree = {
       "name": "photos",
       "children": [
         {
