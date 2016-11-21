@@ -1,1 +1,45 @@
+# Node
+node_modules/*
+npm-debug.log
+
+# JetBrains
+.idea
+.project
+.settings
+.idea/*
+*.iml
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+**/.DS_Store
+
+# typings
+typings
+
+# development
+.config
+.editorconfig
+.eslintrc.json
+.ng2-config.js
+.npmignore
+circle.yml
+tsconfig.json
+tsconfig.publish.json
+tslint.json
 demo
+
+
+#typescript sources
+*.ts
+*.js.map
+!/bundles/*.js.map
+!*.d.ts
+!*.metadata.json
+/src/*.ts
+!/src/*.d.ts
+
+factories

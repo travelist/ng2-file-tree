@@ -16,11 +16,11 @@ const DIRECTORY_TREE_TEMPLATE = `
         </node>
     </ul>
 </div>
-`
+`;
 
 const DIRECTORY_TREE_STYLE = `
     .ul-directory-tree { padding: 0; }
-`
+`;
 
 @Component({
     selector: 'directory-tree',
@@ -30,56 +30,56 @@ const DIRECTORY_TREE_STYLE = `
         '(window:keydown)': 'keydownHandler($event)'
     }
 })
-export class DirectoryTreeComponent implements OnInit {
-    @Input() directory: Node
-    @Input() keyboardWatch: boolean
-    @Output() onChange: EventEmitter<Node>
+export class FileTreeComponent implements OnInit {
+    @Input() directory: Node;
+    @Input() keyboardWatch: boolean;
+    @Output() onChange: EventEmitter<Node>;
 
-    currFocusNode: Node
+    currFocusNode: Node;
 
     constructor(private _eref: ElementRef) {
-        this.onChange = new EventEmitter()
+        this.onChange = new EventEmitter();
         this.keyboardWatch = false
     }
 
     ngOnInit() {
-        this.directory = new Node(this.directory)
+        this.directory = new Node(this.directory);
         this.currFocusNode = null
     }
 
     nodeClicked(nextNode: Node) {
-        this.updateFocusNode(nextNode)
+        this.updateFocusNode(nextNode);
         this.onChange.emit(nextNode)
     }
 
     keydownHandler(event: KeyboardEvent) {
-        if (!this.keyboardWatch) return
-        if (this.currFocusNode === null) return
+        if (!this.keyboardWatch) return;
+        if (this.currFocusNode === null) return;
 
         switch (event.keyCode) {
             case 13: // Enter
-                this.onChange.emit(this.currFocusNode)
-                break
+                this.onChange.emit(this.currFocusNode);
+                break;
             case 37: // left
                 if (this.currFocusNode.isFolder
                     && this.currFocusNode.isExpanded) {
-                    this.currFocusNode.isExpanded = false
+                    this.currFocusNode.isExpanded = false;
                     return
                 }
-                if (!this.currFocusNode.hasParent()) return
-                this.updateFocusNode(this.currFocusNode.parent)
-                break
+                if (!this.currFocusNode.hasParent()) return;
+                this.updateFocusNode(this.currFocusNode.parent);
+                break;
             case 38: // Up
                 // Move to upper item
-                break
+                break;
             case 39: // Right
-                if (!this.currFocusNode.isFolder) return
+                if (!this.currFocusNode.isFolder) return;
                 if (!this.currFocusNode.isExpanded) {
                     this.currFocusNode.isExpanded = true
                 } else if (this.currFocusNode.children.length > 0) {
                     this.updateFocusNode(this.currFocusNode.children[0])
                 }
-                break
+                break;
             case 40: // Down
                 if (this.currFocusNode.isFolder
                     && this.currFocusNode.isExpanded
@@ -97,7 +97,7 @@ export class DirectoryTreeComponent implements OnInit {
         if (this.currFocusNode) {
             this.currFocusNode._focus = false
         }
-        this.currFocusNode = next
+        this.currFocusNode = next;
         this.currFocusNode._focus = true
     }
 }

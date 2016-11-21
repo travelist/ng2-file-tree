@@ -5,20 +5,22 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
-    "noEmitHelpers": true,
+    "sourceMap": false,
+    "noEmitHelpers": false,
     "noImplicitAny": true,
-    "declaration": false,
+    "declaration": true,
     "skipLibCheck": true,
     "stripInternal": true,
     "lib": ["dom", "es6"]
   },
   "exclude": [
-    "node_modules", "bundles", "dist"
+    "node_modules"
   ],
   "files": [
     "./ng2-file-tree.ts",
     "./typings/index.d.ts"
   ],
-  "atom": { "rewriteTsconfig": false }
+  "angularCompilerOptions": {
+    "genDir": "factories"
+  }
 }

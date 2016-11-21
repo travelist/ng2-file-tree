@@ -1,4 +1,4 @@
-# Ng2 Directory Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg&circle-token=c554ebe845b53a2e0db4bc4961ca1747c25168ea)](https://circleci.com/gh/travelist/ng2-directory-tree)
+# Ng2 File Tree [![CircleCI](https://circleci.com/gh/travelist/ng2-directory-tree.svg?style=svg&circle-token=c554ebe845b53a2e0db4bc4961ca1747c25168ea)](https://circleci.com/gh/travelist/ng2-directory-tree)
 
 Angular2 Component for rendering directory tree
 
@@ -38,7 +38,7 @@ var packages = {
 
 ```javascript
 import { Component } from '@angular/core';
-import { DirectoryTreeComponent } from 'ng2-directory-tree'
+import { FileTreeComponent } from 'ng2-directory-tree'
 
 @Component({
     selector: 'my-app',
@@ -46,7 +46,7 @@ import { DirectoryTreeComponent } from 'ng2-directory-tree'
                                (onChange)="logging($event)"
                                [keyboardWatch]=true>
                </directory-tree>`,
-    directives: [DirectoryTreeComponent]
+    directives: [FileTreeComponent]
 })
 export class AppComponent {
     dir = {

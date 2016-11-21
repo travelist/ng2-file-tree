@@ -1,9 +1,9 @@
 {
-  "name": "ng2-directory-tree",
+  "name": "ng2-file-tree",
   "version": "0.4.0",
   "description": "Angular2 Directives for rendering Directory Tree",
-  "main": "ng2-directory-tree.js",
-  "typings": "ng2-directory-tree.d.ts",
+  "main": "ng2-file-tree.js",
+  "typings": "ng2-file-tree.d.ts",
   "keywords": [
     "angular2",
     "directory",
@@ -11,12 +11,13 @@
     "angularjs"
   ],
   "scripts": {
-    "compile": "npm run typings && npm run compile:common",
-    "compile:common": "./node_modules/.bin/tsc -p tsconfig.json",
-    "watch": "./node_modules/.bin/tsc -p tsconfig.json -w",
-    "test": "npm run tslint",
-    "tslint": "tslint src/*.ts",
-    "typings": "./node_modules/.bin/typings install"
+    "watch": "tsc -w",
+    "compile": "npm run compile.commonjs && npm run compile.systemjs",
+    "compile.commonjs": "ngc -p tsconfig.publish.json",
+    "compile.systemjs": "node ./.config/umd-bundler.js",
+    "test": "tslint ./src/*.ts ./src/**/*.ts",
+    "prepublish": "npm run compile",
+    "typings": "typings install"
   },
   "repository": {
     "type": "git",
@@ -28,15 +29,24 @@
     "url": "https://github.com/travelist/ng2-directory-tree/issues"
   },
   "homepage": "https://github.com/travelist/ng2-directory-tree#readme",
+  "peerDependencies": {
+    "@angular/common": "^2.0.0",
+    "@angular/core": "^2.0.0"
+  },
   "dependencies": {
-    "@angular/common": "~2.0.1",
-    "@angular/core": "~2.0.1",
-    "rxjs": "5.0.0-beta.12",
-    "font-awesome": "*"
   },
   "devDependencies": {
-    "zone.js": "^0.6.23",
+    "@angular/common": "2.1.0",
+    "@angular/compiler": "2.1.0",
+    "@angular/compiler-cli": "2.1.0",
+    "@angular/core": "2.1.0",
+    "rxjs": "5.0.0-beta.12",
+    "zone.js": "0.6.25",
     "typescript": "^2.0.3",
-    "tslint": "^3.13.0"
+    "del-cli": "0.2.0",
+    "systemjs-builder": "0.15.32",
+
+    "tslint": "^3.13.0",
+    "font-awesome": "4.7.0"
   }
 }

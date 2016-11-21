@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { DirectoryTreeComponent } from './directory-tree.component'
+import { FileTreeComponent } from './file-tree.component'
 import { NodeComponent } from './node.component'
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [DirectoryTreeComponent, NodeComponent],
-    exports: [DirectoryTreeComponent, NodeComponent]
+    declarations: [FileTreeComponent, NodeComponent],
+    exports: [FileTreeComponent, NodeComponent]
 })
-export class Ng2DirectoryTreeModule {}
+export class Ng2FileTreeModule {}
