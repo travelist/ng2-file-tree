@@ -5,8 +5,9 @@ import { FileTreeComponent } from './file-tree.component'
 import { NodeComponent } from './node.component'
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [FileTreeComponent, NodeComponent],
-    exports: [FileTreeComponent, NodeComponent]
+  imports: [CommonModule],
+  declarations: [FileTreeComponent, NodeComponent],
+  exports: [FileTreeComponent, NodeComponent]
 })
-export class Ng2FileTreeModule {}
+export class Ng2FileTreeModule {
+}

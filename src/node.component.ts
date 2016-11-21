@@ -3,40 +3,40 @@ import { Input } from '@angular/core'
 import { Output } from '@angular/core'
 import { EventEmitter } from '@angular/core'
 
-import { Node } from './node'
+import { TreeNode } from './tree-node'
 
 const NODE_COMPONENT_TEMPLATE = `
-<li *ngIf="node.isDir()" class="all-item">
+<li *ngIf="isExpandable()" class="all-item">
     <a (click)="clickItem(node)"
        class="folder-item"
        [ngClass]="{focus: node._focus}">
         <div style="white-space: nowrap">
-            <span class="point" (click)="clickFolderExpand(node)">
-                <i class="fa fa-fw fa-caret-right" *ngIf="!(node.isExpanded)"></i>
-                <i class="fa fa-fw fa-caret-down" *ngIf="node.isExpanded"></i>
+            <span class="point" (click)="expandFolder()">
+                <i class="fa fa-fw fa-caret-right" *ngIf="!isExpanded()"></i>
+                <i class="fa fa-fw fa-caret-down" *ngIf="isExpanded()"></i>
             </span>
 
-
-            <i class="fa fa-folder-o" *ngIf="!(node.isExpanded)"></i>
-            <i class="fa fa-folder-open-o" *ngIf="node.isExpanded"></i>
+            <i class="fa fa-folder-o" *ngIf="!isExpanded()"></i>
+            <i class="fa fa-folder-open-o" *ngIf="isExpanded()"></i>
             {{ node.name }}
         </div>
     </a>
 
-    <ul *ngIf="node.isExpanded" class="children-items">
+    <ul *ngIf="isExpanded()" class="children-items">
         <node *ngFor="let n of node.children" [node]="n" (clicked)="propagate($event)"></node>
     </ul>
 </li>
-<li *ngIf="!node.isDir()" class="all-item">
+
+<li *ngIf="!isExpandable()" class="all-item">
     <a (click)="clickItem(node)"
        class="file-item"
        [ngClass]="{focus: node._focus}">
        <div style="white-space: nowrap">
-           <i class="fa fa-file-o"></i> {{ node.name }} aaaas
+           <i class="fa fa-file-o"></i> {{ node.name }}
        </div>
     </a>
 </li>
-`
+`;
 
 const DIRECTORY_TREE_STYLE = `
 .all-item {
@@ -47,27 +47,47 @@ const DIRECTORY_TREE_STYLE = `
 .file-item { padding-left: 0px; }
 .children-items {
   padding-left: 25px;
-  padding-top: 4px;
-  padding-bottom: 4px;
 }
 .focus { color: steelblue }
-`
+`;
 
 @Component({
-    selector: 'node',
-    template: NODE_COMPONENT_TEMPLATE,
-    styles: [DIRECTORY_TREE_STYLE]
+  selector: 'node',
+  template: NODE_COMPONENT_TEMPLATE,
+  styles: [DIRECTORY_TREE_STYLE]
 })
 export class NodeComponent {
-    @Input() node: Node
-    @Input() index: number
-    @Output() clicked: EventEmitter<Node>
+  @Input() node:TreeNode;
+  @Input() index:number;
+  @Output() clicked:EventEmitter<TreeNode>;
 
-    constructor() { this.clicked = new EventEmitter() }
+  constructor() {
+    this.clicked = new EventEmitter<TreeNode>()
+  }
 
-    clickFolderExpand(node: Node) { this.node.isExpanded = !this.node.isExpanded }
+  isExpandable(): boolean {
+    let isDirectory:boolean = this.node.isDir();
+    return isDirectory;
+  }
 
-    clickItem(node: Node) { this.clicked.emit(node) }
+  isExpanded(): boolean {
+    return this.node.isExpanded()
+  }
 
-    propagate(node: Node) { this.clicked.emit(node) }
+  expandFolder():void {
+    console.log(this.node)
+    if (this.node.isExpanded()) {
+      this.node.fold()
+    } else {
+      this.node.expand()
+    }
+  }
+
+  clickItem(node:TreeNode) {
+    this.clicked.emit(node)
+  }
+
+  propagate(node:TreeNode) {
+    this.clicked.emit(node)
+  }
 }
