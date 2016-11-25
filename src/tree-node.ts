@@ -15,7 +15,12 @@ export class TreeNode {
   public type:FileType;
   public children:Array<TreeNode>;
 
-  private _parentNode:TreeNode;
+  // Full file path from root node
+  private fullFilepath: string;
+
+  // Parent Node
+  private parentNode:TreeNode;
+
   private _isFocused:boolean;
   private _isExpanded:boolean;
 
@@ -24,16 +29,31 @@ export class TreeNode {
     this.type = params.type || FileType.file;
     this.children = [];
 
-    if (typeof(params.children) !== 'undefined') {
+    // update private values
+    this.parentNode = parent;
+    this._isFocused = params.focus || false;
+    this._isExpanded = this.type === FileType.dir || this.children.length > 0;
+
+    if (parent !== null) {
+      let parentPath:string = this.parentNode.getFullPath();
+      if (parentPath.slice(-1) === '/') {
+        this.fullFilepath = `${parentPath}${this.name}`;
+      } else {
+        this.fullFilepath = `${parentPath}/${this.name}`;
+      }
+    } else {
+      this.fullFilepath = this.name;
+    }
+
+    if (typeof(params.children) !== 'undefined' && params.children !== null) {
       params.children.forEach(
         (fileNodeParams) => this.children.push(new TreeNode(fileNodeParams, this))
       );
     }
+  }
 
-    // update private values
-    this._parentNode = parent;
-    this._isFocused = params.focus || false;
-    this._isExpanded = this.type === FileType.dir || this.children.length > 0
+  getFullPath():string {
+    return this.fullFilepath;
   }
 
   public isDir():boolean {
@@ -43,7 +63,7 @@ export class TreeNode {
 
 
   public getParentNode():TreeNode {
-    return this._parentNode
+    return this.parentNode
   }
 
   public isExpanded():boolean {

@@ -10,16 +10,16 @@ import { OnChanges } from '@angular/core'
 import { TreeNode } from './tree-node'
 import { NodeComponent } from './node.component'
 import { TreeNodeParams } from './tree-node';
-import {FileType} from "./tree-node";
+import {FileType} from './tree-node';
 
 const DIRECTORY_TREE_TEMPLATE:string = `
-<ul class="ul-file-tree">
+<ul class="file-tree">
   <node [node]="root" (clicked)="fileTreeClicked($event)"></node>
 </ul>
 `;
 
 const DIRECTORY_TREE_STYLE:string = `
-.ul-file-tree { padding: 0; }
+.file-tree { padding: 0; }
 `;
 
 @Component({
@@ -47,12 +47,12 @@ export class FileTreeComponent implements OnInit, OnChanges {
     this.root = new TreeNode(
       <TreeNodeParams>{name: '/', type: FileType.dir}
     );
+
     this.currFocusNode = null;
   }
 
   ngOnChanges(changes:SimpleChanges) {
-    console.log("update");
-    if (typeof(changes['tree'].currentValue) !== "undefined") {
+    if (typeof(changes['tree'].currentValue) !== 'undefined') {
       this.root = this.tree;
     }
   }
