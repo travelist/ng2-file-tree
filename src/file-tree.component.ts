@@ -1,103 +1,113 @@
 import { Component } from '@angular/core'
 import { EventEmitter } from '@angular/core'
 import { ElementRef } from '@angular/core'
+import { SimpleChanges } from '@angular/core'
 import { Input } from '@angular/core'
 import { Output } from '@angular/core'
 import { OnInit } from '@angular/core'
+import { OnChanges } from '@angular/core'
 
-import { Node } from './node'
+import { TreeNode } from './tree-node'
 import { NodeComponent } from './node.component'
+import { TreeNodeParams } from './tree-node';
+import {FileType} from './tree-node';
 
-const DIRECTORY_TREE_TEMPLATE = `
-<div>
-    <ul class="ul-directory-tree">
-        <node [node]="tree"
-              (clicked)="nodeClicked($event)">
-        </node>
-    </ul>
-</div>
+const DIRECTORY_TREE_TEMPLATE:string = `
+<ul class="file-tree">
+  <node [node]="root" (clicked)="fileTreeClicked($event)"></node>
+</ul>
 `;
 
-const DIRECTORY_TREE_STYLE = `
-    .ul-directory-tree { padding: 0; }
+const DIRECTORY_TREE_STYLE:string = `
+.file-tree { padding: 0; }
 `;
 
 @Component({
-    selector: 'file-tree',
-    template: DIRECTORY_TREE_TEMPLATE,
-    styles: [DIRECTORY_TREE_STYLE],
-    host: {
-        '(window:keydown)': 'keydownHandler($event)'
-    }
+  selector: 'file-tree',
+  template: DIRECTORY_TREE_TEMPLATE,
+  styles: [DIRECTORY_TREE_STYLE],
+  host: {
+    '(window:keydown)': 'keydownHandler($event)'
+  }
 })
-export class FileTreeComponent implements OnInit {
-    @Input() tree: Node;
-    @Input() keyboardWatch: boolean;
-    @Output() onChange: EventEmitter<Node>;
+export class FileTreeComponent implements OnInit, OnChanges {
+  @Input() tree:TreeNode;
+  @Input() keyboardWatch:boolean;
+  @Output() onChange:EventEmitter<TreeNode>;
 
-    currFocusNode: Node;
+  private root:TreeNode;
+  private currFocusNode:TreeNode;
 
-    constructor(private _eref: ElementRef) {
-        this.onChange = new EventEmitter();
-        this.keyboardWatch = false
+  constructor(private _eref:ElementRef) {
+    this.onChange = new EventEmitter();
+    this.keyboardWatch = false
+  }
+
+  ngOnInit() {
+    this.root = new TreeNode(
+      <TreeNodeParams>{name: '/', type: FileType.dir}
+    );
+
+    this.currFocusNode = null;
+  }
+
+  ngOnChanges(changes:SimpleChanges) {
+    if (typeof(changes['tree'].currentValue) !== 'undefined') {
+      this.root = this.tree;
     }
+  }
 
-    ngOnInit() {
-        this.tree = new Node(this.tree);
-        this.currFocusNode = null
-    }
+  fileTreeClicked(nextNode:TreeNode) {
+    this.updateFocusNode(nextNode);
+    this.onChange.emit(nextNode)
+  }
 
-    nodeClicked(nextNode: Node) {
-        this.updateFocusNode(nextNode);
-        this.onChange.emit(nextNode)
-    }
+  keydownHandler(event:KeyboardEvent) {
+    if (!this.keyboardWatch) return;
+    if (this.currFocusNode === null) return;
 
-    keydownHandler(event: KeyboardEvent) {
-        if (!this.keyboardWatch) return;
-        if (this.currFocusNode === null) return;
-
-        switch (event.keyCode) {
-            case 13: // Enter
-                this.onChange.emit(this.currFocusNode);
-                break;
-            case 37: // left
-                if (this.currFocusNode.isFolder
-                    && this.currFocusNode.isExpanded) {
-                    this.currFocusNode.isExpanded = false;
-                    return
-                }
-                if (!this.currFocusNode.hasParent()) return;
-                this.updateFocusNode(this.currFocusNode.parent);
-                break;
-            case 38: // Up
-                // Move to upper item
-                break;
-            case 39: // Right
-                if (!this.currFocusNode.isFolder) return;
-                if (!this.currFocusNode.isExpanded) {
-                    this.currFocusNode.isExpanded = true
-                } else if (this.currFocusNode.children.length > 0) {
-                    this.updateFocusNode(this.currFocusNode.children[0])
-                }
-                break;
-            case 40: // Down
-                if (this.currFocusNode.isFolder
-                    && this.currFocusNode.isExpanded
-                    && this.currFocusNode.children.length > 0) {
-                    // first child
-                    this.updateFocusNode(this.currFocusNode.children[0])
-                } else {
-                    // next sibling
-                }
-                break
+    switch (event.keyCode) {
+      case 13: // Enter
+        this.onChange.emit(this.currFocusNode);
+        break;
+      case 37: // left
+        if (this.currFocusNode.isDir()
+          && this.currFocusNode.isExpanded) {
+          this.currFocusNode.fold();
+          return
         }
-    }
-
-    private updateFocusNode(next: Node) {
-        if (this.currFocusNode) {
-            this.currFocusNode._focus = false
+        if (!this.currFocusNode.hasParent()) return;
+        this.updateFocusNode(this.currFocusNode.getParentNode());
+        break;
+      case 38: // Up
+        // Move to upper item
+        break;
+      case 39: // Right
+        if (!this.currFocusNode.isDir()) return;
+        if (!this.currFocusNode.isExpanded) {
+          this.currFocusNode.expand();
+        } else if (this.currFocusNode.children.length > 0) {
+          this.updateFocusNode(this.currFocusNode.children[0])
         }
-        this.currFocusNode = next;
-        this.currFocusNode._focus = true
+        break;
+      case 40: // Down
+        if (this.currFocusNode.isDir()
+          && this.currFocusNode.isExpanded
+          && this.currFocusNode.children.length > 0) {
+          // first child
+          this.updateFocusNode(this.currFocusNode.children[0])
+        } else {
+          // next sibling
+        }
+        break
     }
+  }
+
+  private updateFocusNode(next:TreeNode) {
+    if (this.currFocusNode) {
+      this.currFocusNode.blur()
+    }
+    this.currFocusNode = next;
+    this.currFocusNode.focus()
+  }
 }
