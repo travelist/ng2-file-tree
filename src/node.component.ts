@@ -75,7 +75,6 @@ export class NodeComponent {
   }
 
   expandFolder():void {
-    console.log(this.node)
     if (this.node.isExpanded()) {
       this.node.fold()
     } else {
