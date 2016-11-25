@@ -1,6 +1,6 @@
 {
   "name": "ng2-file-tree",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "Angular2 Directives for rendering Directory Tree",
   "main": "ng2-file-tree.js",
   "typings": "ng2-file-tree.d.ts",
@@ -15,7 +15,7 @@
     "compile": "npm run compile.commonjs && npm run compile.systemjs",
     "compile.commonjs": "ngc -p tsconfig.publish.json",
     "compile.systemjs": "node ./.config/umd-bundler.js",
-    "test": "tslint ./src/*.ts ./src/**/*.ts",
+    "test": "tslint -c tslint.json ./src/*.ts ./src/**/*.ts",
     "prepublish": "npm run compile",
     "typings": "typings install"
   },

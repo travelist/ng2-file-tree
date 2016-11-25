@@ -117,7 +117,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'my-app',
     template: `<file-tree [tree]="fileTree"
-                          (onChange)="logging($event)"
+                          (onChange)="clickFileTree($event)"
                           [keyboardWatch]=true>
                </file-tree>`
 })
@@ -140,11 +140,16 @@ export class AppComponent {
       ]
     }
 
-    logging(node) {
-        console.log(node)
+    clickFileTree(fileNode:TreeNode):void {
+        console.log(fileNode);
+
+        // Get full file path
+        console.log(fileNode.getFullPath())
     }
 }
 ```
+
+
 
 ### Features
 
